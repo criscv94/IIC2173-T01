@@ -1,0 +1,16 @@
+<h1>Comments</h1>
+<form name=new_comment action="/comments/" method="post">{% csrf_token %}
+  <input type="text" name="message">
+  <input type="submit" name="new_comment" value="Comment">
+</form>
+{% if all_comments %}
+    <div class="comments">
+      {% for comment in all_comments %}
+        <div class="comment-{{ comment.id }}">
+          {{ comment.request_ip}} - {{ comment.message }}
+        </div>
+      {% endfor %}
+    </div>
+{% else %}
+    <p>No comment are available.</p>
+{% endif %}
