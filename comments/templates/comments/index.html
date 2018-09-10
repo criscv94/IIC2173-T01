@@ -1,5 +1,5 @@
 <h1>Comments</h1>
-<form name=new_comment action="/" method="post">{% csrf_token %}
+<form name=new_comment action="/create" method="post">{% csrf_token %}
   <input type="text" name="message">
   <input type="submit" name="new_comment" value="Comment">
 </form>

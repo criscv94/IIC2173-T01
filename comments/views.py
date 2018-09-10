@@ -8,6 +8,16 @@ from .utils import get_client_ip
 
 def index(request):
     """Show every comment with an available form"""
+    all_comments = Comment.objects.order_by('-request_time')
+    template = loader.get_template('comments/index.html')
+    context = {
+        'all_comments': all_comments,
+    }
+    return HttpResponse(template.render(context, request))
+
+
+def create(request):
+    """Create new comment method"""
     if request.method == 'POST':
         message = request.POST['message']
         _ip = get_client_ip(request)
@@ -16,9 +26,4 @@ def index(request):
                           request_ip=_ip,
                           message=message)
         comment.save()
-    all_comments = Comment.objects.order_by('-request_time')
-    template = loader.get_template('comments/index.html')
-    context = {
-        'all_comments': all_comments,
-    }
-    return HttpResponse(template.render(context, request))
+    return redirect('/')
