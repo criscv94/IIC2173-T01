@@ -1,7 +1,7 @@
-from time import gmtime, strftime
 from django.http import HttpResponse
 from django.shortcuts import redirect
 from django.template import loader
+from django.utils import timezone
 from .models import Comment
 from .utils import get_client_ip
 
@@ -11,7 +11,7 @@ def index(request):
     if request.method == 'POST':
         message = request.POST['message']
         _ip = get_client_ip(request)
-        timestamp = strftime("%Y-%m-%d %H:%M:%S", gmtime())
+        timestamp = timezone.now()
         comment = Comment(request_time=timestamp,
                           request_ip=_ip,
                           message=message)
